@@ -1,25 +1,28 @@
 # costs_allocation
-Costs allocation based on Yaml configuration
+Costs allocation based on rules defined in flexible Yaml configuration file.
 
 ## Problem statement:
-- For cloud costs allocation, it is heavely dependent on the business logic and the allocation rules could be very complicated.  Most likely people are doing this manually and it is error prone using excel or google sheet.
-- Tagging hygiene is important for the cloud cost allocation, but most likely the tagging is not done consistently and the tags are not always present.
-- If not done manually, they are buying very expensive tools to do this.   Typically the tools vendors charge by the percentage of cloud spendings each month.
+- Cloud cost allocation is a complex process heavily dependent on business logic and often involves intricate allocation rules. Many organizations resort to manual allocation using spreadsheets, which is time-consuming and prone to errors.
+- While tagging is crucial for effective cloud cost allocation, inconsistent tagging practices and missing tags are common challenges that hinder accurate allocation.
+- Automated solutions exist, but they often come with a hefty price tag. Many vendors charge a percentage of monthly cloud spending, which can become increasingly expensive as cloud usage grows.
+- This cost allocation solution is versatile and not limited to cloud costs. It can be applied to any numerical values that follow a similar pattern and need to be allocated across different categories.
+- Our script provides a flexible, cost-effective alternative that can handle complex allocation rules while maintaining transparency and auditability.
 
 ## The Solution:
-- This script is to solve the problem statement by providing a simple solution to do the costs allocation based on Yaml configuration file.
-- The script will read the input file, do the allocation based on the Yaml configuration file, and output the result to a new file.
-- It will handle most of the cases:
-    - change the label of the category
-    - adjust the cost of the category; with one-time adjustment with comment
-    - allocate the cost to the category evenly
-    - allocate the cost to the category proportionally
-- The script will also create a series of intermediate files to verify the result step by step.
+- Unlock the proprietary intelligent cost allocation tools with this solution that transforms complex rules into auditable automated process.
+- The solution efficiently processes your input file, applies sophisticated allocation rules defined in a user-friendly YAML configuration, and produces a detailed output file.
+- Our versatile approach handles various scenarios, including:
+    - Dynamic relabeling of categories
+    - Precise cost adjustments with audit trails
+    - Flexible cost distribution, both evenly and proportionally
+- For enhanced transparency, the solution generates intermediate files, allowing you to track the allocation process step by step.
 
 ## The Benefit:
-- The script will save a lot of time for the cost allocation work.
-- The script will be more consistent and less error prone.
-- The yaml file is human readable and can be easily modified.  Each month can have its own yaml file so when we look back, it is naturally the audit trail to explain the cost allocation to the business leaders.
+- The script significantly reduces the time required for cost allocation tasks, improving efficiency.
+- It ensures consistency and minimizes errors compared to manual processes.
+- The YAML configuration file is human-readable and easily modifiable, allowing for flexible rule adjustments.
+- Each month can have its own YAML file, serving as a natural audit trail to explain cost allocation decisions to business leaders.
+- This approach enhances transparency and facilitates historical analysis of allocation strategies.
 
 ## Usage
 
@@ -115,10 +118,38 @@ share_proportional:
 
 ## Expected output:
 
-- Final output will be: combine input and yaml file name with csv extension.
-- The output file will be in the same directory as the input file.
-- It will create a series of intermediate files in the same directory to verify the result step by step.
+## Expected Output and Benefits:
 
+1. Final Output:
+   - The script will generate a CSV file combining the names of the input and YAML files.
+   - This output file will be saved in the same directory as the input file.
+
+2. Intermediate Files:
+   - The script will create a series of intermediate files in the same directory.
+   - These files allow for step-by-step verification of the cost allocation process.
+
+3. Time Efficiency:
+   - The script significantly reduces the time required for cost allocation tasks.
+
+4. Consistency and Accuracy:
+   - By automating the process, the script ensures more consistent results.
+   - It minimizes the risk of human errors in cost allocation calculations.
+
+5. Flexibility and Readability:
+   - The YAML file format is human-readable and easily modifiable.
+   - Each month can have its own YAML file, providing a clear audit trail.
+   - This approach allows for easy explanation of cost allocations to business leaders.
+
+6. Audit Trail:
+   - The monthly YAML files serve as a natural historical record.
+   - They provide transparency and justification for past cost allocation decisions.
+
+
+## follow me on www.linkedin.com/in/pingai 
+### for any question email to ping@ping-ai.com
+### visit us at www.ping-ai.com for Language Model Intelligence Guide newsletter
+### visit us at www.ping-ai.com/blog-1 for intelligence articles
+### Love to connect and hear from you.
 
 
     
