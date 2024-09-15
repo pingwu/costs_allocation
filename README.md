@@ -23,6 +23,9 @@ Costs allocation based on rules defined in flexible Yaml configuration file.
 - The YAML configuration file is human-readable and easily modifiable, allowing for flexible rule adjustments.
 - Each month can have its own YAML file, serving as a natural audit trail to explain cost allocation decisions to business leaders.
 - This approach enhances transparency and facilitates historical analysis of allocation strategies.
+- No need to be a cost allocation expert or python expert to use this tool, just a flexible Yaml file to define the allocation rules.
+- Don't even need to learn excel macro, just use a text editor to edit the Yaml file.
+- The output file will be a CSV file that can be used for further analysis in Excel, Power BI, or any other data analysis tool.
 
 ## Usage
 
@@ -69,6 +72,8 @@ cost_adjustment:
   - share:
     - [100.43, "explain why add 100.43 goes here."]
     - [-100.43: "explain need to know what had happend as comments."]
+regroup:
+  []
 share_evenly:
   - school:
     - cook
@@ -78,7 +83,6 @@ share_proportional:
   - share:
       []
   - kitchen:
-    - cook  
     - stove
     - table
 ```
@@ -88,6 +92,14 @@ share_proportional:
   - aaa : aaa2
   - ^bb.* : bbbbb
 #### This will change all aaa to aaa2 and all bb to bbbbb; the key is the regex pattern and the value is the new value.
+#### Constructing regex patterns has become much easier with the help of LLMs (Large Language Models). For example, your prompt could look like this: "I am using the Python re package. Please help me write a regex pattern for the following case: start with 'cloud' (case insensitive) followed by any characters and numbers to the end of the line." The result would be: (?i)^cloud.*$
+
+Most of the time, you're dealing with misspellings, so you can use the above prompt example as a template to construct your regex patterns for various scenarios. This approach simplifies the process of creating complex regex patterns, making it more accessible even for those less familiar with regex syntax.
+
+- regroup:
+  - []
+#### This will regroup the cost to the category in the Yaml file.  The cost will be added to the desinated category in the Yaml file.  This is useful because after lable change, some category might ended up with multiple lines, this will help to group them into one.   (for future development possible: We can also put the comment in the regroup section to explain why we need to regroup the cost. or we can repurse regroup as a rename function, such case should be handled by regex match for flexibility)
+
 
 - cost_adjustment:
   - school:
@@ -102,6 +114,7 @@ share_proportional:
     - look
     - aaa2
 #### This will allocate the "school" cost evenly to cook, look, and aaa2; the cost will be divided by the number of categories and each category will be added the same value.
+
 
 - share_proportional:
   - share:
