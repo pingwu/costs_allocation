@@ -8,6 +8,8 @@ cost_adjustment:
   - share:
     - [100.43, "explain why add 100.43 goes here."]
     - [-100.43: "explain need to know what had happend as comments."]
+regroup:
+  []
 share_evenly:
   - school:
     - cook
@@ -16,8 +18,7 @@ share_evenly:
 share_proportional:
   - share:
       []
-  - kitchen:
-    - cook  
+  - kitchen: 
     - stove
     - table
 

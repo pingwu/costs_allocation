@@ -4,6 +4,54 @@ import sys
 import os
 import re
 from typing import Dict, List, Union
+def share_costs(df: pd.DataFrame, category: str, distribution: List[str], method: str) -> pd.DataFrame:
+    comments_name = f"share_{method}_{category}"
+    if comments_name not in df.columns:
+        df[comments_name] = ''
+    
+    if category not in df['category'].values:
+        raise ValueError(f"Category '{category}' not found in the DataFrame")
+    
+    cost_to_share = df.loc[df['category'] == category, 'costs'].values[0]
+    print(f"category: {category}")
+    print(f"Cost to share: {cost_to_share}")
+    print(f"Distribution: {distribution}")
+
+    # Check if the category costs have already been distributed
+    if cost_to_share == 0:
+        df.loc[df['category'] == category, comments_name] += f"{0.00:.2f}"
+        return df
+    
+    # If distribution list is empty, share across all categories except the parent
+    if not distribution:
+        distribution = df[df['category'] != category]['category'].tolist()
+    
+    # Calculate total cost of distribution categories
+    total_dist_cost = df[df['category'].isin(distribution)]['costs'].sum()
+    
+    shares = {}
+    if method == 'evenly' or total_dist_cost == 0:
+        share = cost_to_share / len(distribution)
+        shares = {sub_category: share for sub_category in distribution}
+    else:  # method == 'proportional'
+        for sub_category in distribution:
+            if sub_category in df['category'].values:
+                sub_cost = df.loc[df['category'] == sub_category, 'costs'].values[0]
+                shares[sub_category] = (sub_cost / total_dist_cost) * cost_to_share
+            else:
+                shares[sub_category] = 0
+    
+    for sub_category, share in shares.items():
+        if sub_category in df['category'].values:
+            df.loc[df['category'] == sub_category, 'costs'] += share
+            df.loc[df['category'] == sub_category, comments_name] += f"+{share:.2f}"
+        else:
+            df = df.append({'category': sub_category, 'costs': share, comments_name: f"+{share:.2f}"}, ignore_index=True)
+    
+    df.loc[df['category'] == category, 'costs'] = 0
+    df.loc[df['category'] == category, comments_name] += f"-{cost_to_share:.2f}"
+    
+    return df
 
 # Ensure costs are stored as two decimal floating numbers
 pd.options.display.float_format = '{:.2f}'.format
@@ -17,6 +65,61 @@ def output_intermediate_csv(df: pd.DataFrame, step: str):
     df_with_comments.to_csv(output_path, index=False)
     print(f"Intermediate CSV saved: {output_path}")
 
+def share_costs(df: pd.DataFrame, category: str, distribution: List[str], method: str) -> pd.DataFrame:
+    comments_name = f"share_{method}_{category}"
+    if comments_name not in df.columns:
+        df[comments_name] = ''
+    
+    if category not in df['category'].values:
+        raise ValueError(f"Category '{category}' not found in the DataFrame")
+    
+    cost_to_share = df.loc[df['category'] == category, 'costs'].values[0]
+    print(f"category: {category}")
+    print(f"Cost to share: {cost_to_share}")
+    print(f"Distribution: {distribution}")
+
+    # Check if the category costs have already been distributed
+    if cost_to_share == 0:
+        df.loc[df['category'] == category, comments_name] += f"{0.00:.2f}"
+        return df
+    
+    # If distribution list is empty, share across all categories except the parent
+    if not distribution:
+        distribution = df[df['category'] != category]['category'].tolist()
+    
+    # Calculate total cost of distribution categories
+    total_dist_cost = df[df['category'].isin(distribution)]['costs'].sum()
+    
+    if method == 'evenly' or total_dist_cost == 0:
+        share = cost_to_share / len(distribution)
+    else:  # method == 'proportional'
+        shares = {}
+        for sub_category in distribution:
+            if sub_category in df['category'].values:
+                sub_cost = df.loc[df['category'] == sub_category, 'costs'].values[0]
+                shares[sub_category] = (sub_cost / total_dist_cost) * cost_to_share
+            else:
+                shares[sub_category] = 0
+    
+    for sub_category in distribution:
+        if method == 'evenly' or total_dist_cost == 0:
+            sub_share = share
+        else:
+            sub_share = shares[sub_category]
+        
+        if sub_category in df['category'].values:
+            df.loc[df['category'] == sub_category, 'costs'] += sub_share
+            df.loc[df['category'] == sub_category, comments_name] = f"{sub_share:.2f}"
+        else:
+            new_row = {'category': sub_category, 'costs': sub_share, comments_name: f"{sub_share:.2f}"}
+            if method == 'proportional':
+                new_row[comments_name] += f"New category. Received {sub_share:.2f} from {category} (shared proportionally). "
+            df = pd.concat([df, pd.DataFrame([new_row])], ignore_index=True)
+    
+    return df
+
+def share_evenly(df: pd.DataFrame, category: str, distribution: List[str]) -> pd.DataFrame:
+    return share_costs(df, category, distribution, 'evenly')
 
 def share_proportional(df: pd.DataFrame, category: str, distribution: List[str]) -> pd.DataFrame:
     comments_name = f"share_proportional_{category}"
