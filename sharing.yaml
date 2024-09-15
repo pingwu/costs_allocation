@@ -1,0 +1,24 @@
+change_label:
+  - aaa : aaa2
+  - ^bb.* : bbbbb
+cost_adjustment:
+  - school:
+    - [100.33, "because we need to make change here."]
+    - [-100.33, "because because change goes here."]
+  - share:
+    - [100.43, "explain why add 100.43 goes here."]
+    - [-100.43: "explain need to know what had happend as comments."]
+share_evenly:
+  - school:
+    - cook
+    - look
+    - aaa2
+share_proportional:
+  - share:
+      []
+  - kitchen:
+    - cook  
+    - stove
+    - table
+
+
