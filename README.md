@@ -161,7 +161,7 @@ Most of the time, you're dealing with misspellings, so you can use the above pro
 ## follow me on www.linkedin.com/in/pingai 
 ### for any question email to ping@ping-ai.com
 ### visit us at www.ping-ai.com for Language Model Intelligence Guide newsletter
-### visit us at www.ping-ai.com/blog-1 for intelligence articles
+### visit us at www.ping-ai.com/blog for intelligence articles
 ### Love to connect and hear from you.
 
 
